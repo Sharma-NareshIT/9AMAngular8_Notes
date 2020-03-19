@@ -1,0 +1,83 @@
+1. nestedform.component.ts
+
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, FormGroupDirective } from '@angular/forms';
+
+@Component({
+  selector: 'app-nestedform',
+  templateUrl: './nestedform.component.html',
+  styleUrls: ['./nestedform.component.css']
+})
+export class NestedformComponent{
+  public frmRegister = new FormGroup({
+      Name: new FormControl(''),
+      Price: new FormControl(''),
+      frmDetails: new FormGroup({
+        City: new FormControl(''),
+        IsInStock: new FormControl('')
+      })
+  });
+  public UpdateClick() {
+    this.frmRegister.patchValue({
+      Name: 'Samsung TV',
+      frmDetails: {
+        City: 'Hyd',
+        IsInStock: true
+      }
+    })
+  }
+}
+
+
+2. nestedform.component.html
+
+<div class="container">
+  <h2>Parent Form</h2>
+  <div>
+      <form [formGroup]="frmRegister" >
+        <dl>
+            <dt>Name</dt>
+            <dd>
+                <input type="text" formControlName="Name" >
+            </dd>
+            <dt>Price</dt>
+            <dd>
+                <input type="text" formControlName="Price">
+            </dd>
+        </dl>
+        <h3>Child Form</h3>
+        <div formGroupName="frmDetails" >
+            <dl>
+                <dt>City</dt>
+                <dd>
+                    <select formControlName="City">
+                        <option>Delhi</option>
+                        <option>Hyd</option>
+                    </select>
+                </dd>
+                <dt>Is In Stock</dt>
+                <dd>
+                    <input type="checkbox" formControlName="IsInStock">
+                </dd>
+            </dl>
+            <button (click)="UpdateClick()" class="btn btn-primary">Update Nested Form</button>
+        </div>
+      </form>
+  </div>
+  <div>
+      <h2>Product Details</h2>
+      <dl>
+          <dt>Name</dt>
+          <dd>{{frmRegister.value.Name}}</dd>
+          <dt>Price</dt>
+          <dd>{{frmRegister.value.Price}}</dd>
+          <dt>City</dt>          
+          <dd>{{frmRegister.value.frmDetails.City}}</dd>
+          <dt>Is In Stock</dt>
+          <dd>{{(frmRegister.value.frmDetails.IsInStock)==true?"Available":"Out of Stock"}}</dd>
+      </dl>
+  </div>
+</div>
+
+
+
