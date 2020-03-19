@@ -1,0 +1,26 @@
+	              Nested Forms
+- A Form Element can't be defined with another Form element with in the context.
+- Angular Allows to dynamically add a form element inside another form element i.e is Nested Form.
+- It uses the Classes
+	a) FormGroup
+	b) FormControl
+Syntax:
+    public parentForm = new FormGroup(
+      {
+           control : new FormControl(' '),
+           childForm : new FormGroup({
+                control: new FormControl(' ')
+           })
+      })
+
+- The parent form is configured to <form> element by using "[formGroup]" property.
+- The child form is configured to any container like <div> by using the attribute "formGroupName".
+- The controls are configure to any form control by using the attribute "formControlName".
+- To Access the parent form control values
+     "parentForm.value.controlName"
+- To Access the child form control values
+     "parentForm.value.childForm.controlName"
+- To Update the nested form we have to use the function "patchValue()"
+	
+
+
