@@ -1,0 +1,171 @@
+	     Form Builder Service
+- FormBuilder is a service provided by Angular to dynamically control the forms and its controls.
+- Without disturbing the UI you can extend the form from your logic.
+- You can dynamically add or remove controls into the form.
+- FormBuilder provides a set of functions that allow to control the form dynamically.
+- FormBuilder uses a singleton pattern.
+
+Function		Description
+===========================================
+group()	      It is used to configure a form group.
+	      Group contains a set of controls.
+	
+	       FormBuilder.group();
+
+control()	       It is used to configure a form control.
+	       like button, textbox, checkbox, radio 	       etc.
+
+	       FormBuilder.control();
+
+array()	       It is used to configure a set of controls
+	       so that you can dynamically add or
+	       remove controls. It is a collection of
+	       controls.
+Syntax:
+1. Inject the form builder into component
+
+import { FormBuilder } from '@angular/forms'
+
+constructor(private fb: FormBuilder) { }
+
+this.fb.group();
+this.fb.control();
+this.fb.array();
+
+2. Creating a Group and Controls
+
+     public  frmParent = this.fb.group({
+           Name: ['value', validators],
+           Price : ['value', validators],
+           frmChild: this.fb.group({
+ 	City: ['value', validators]
+           })
+      })
+
+3. Assign the Form Builder to UI
+      Parent Form = [formGroup]
+      Child Form  = formGroupName
+      Control        = formControlName
+
+Ex: FormBuilder
+
+1. Add a component by name 
+     > ng g c formbuilderdemo
+
+2. formbuilderdemo.component.ts
+
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+
+@Component({
+  selector: 'app-formbuilderdemo',
+  templateUrl: './formbuilderdemo.component.html',
+  styleUrls: ['./formbuilderdemo.component.css']
+})
+export class FormbuilderdemoComponent {
+
+  constructor(private fb: FormBuilder) { }
+  public frmRegister = this.fb.group({
+      Name: [''],
+      Price: [''],
+      frmDetails: this.fb.group({
+        City: [''],
+        IsInStock: ['']
+      })
+  });
+}
+
+3. formbuilder.component.html
+
+<div class="container">
+  <form [formGroup]="frmRegister">
+    <dl>
+        <dt>Name</dt>
+        <dd>
+           <input type="text" formControlName="Name" >
+        </dd>
+        <dt>Price</dt>
+        <dd>
+            <input type="text" formControlName="Price" >
+        </dd>
+    </dl>
+    <div formGroupName="frmDetails">
+        <dl>
+            <dt>City</dt>
+            <dd>
+                <select formControlName="City">
+                    <option>Delhi</option>
+                    <option>Hyderabad</option>
+                </select>
+            </dd>
+            <dt>Is In Stock</dt>
+            <dd>
+                <input type="checkbox" formControlName="IsInStock">
+            </dd>
+        </dl>
+    </div>
+  </form>
+  <div>
+      <h2>Product Details</h2>
+      <dl>
+          <dt>Name</dt>
+          <dd>{{frmRegister.value.Name}}</dd>
+          <dt>Price</dt>
+          <dd>{{frmRegister.value.Price}}</dd>
+          <dt>City</dt>
+          <dd>{{frmRegister.value.frmDetails.City}}</dd>
+          <dt>Is In Stock</dt>
+          <dd>{{frmRegister.value.frmDetails.IsInStock}}</dd>
+      </dl>
+  </div>
+</div>
+
+FormValidation Dynamically:
+- Angular provides a validation service that can handle all validations for a control dynamically.
+- It provides a set of validation attributes  are defined in "angular/forms" library.
+- You can access the validation attribute by using the class "Validators"
+- The validation attributes include options like required, minlength, maxlength, email etc..
+
+Ex:
+1. Goto ".ts" and import validators
+
+import { FormBuilder, Validators } from '@angular/forms';
+
+2. Assign validator to any form control
+
+ Name: ['', Validators.required],
+
+3. Goto ".html" and define validation and message
+
+<input type="text" formControlName="Name" required >
+<span *ngIf="frmRegister.value.Name.invalid" >Name Required</span>
+
+Form Array
+- It is an angular service which is used to add or remove controls into a form dynamically.
+- It uses a FormBuilder function "array()"
+- You can add or remove controls dynamically by using array functions
+	shift(), unshift(), push(), pop(), splice()
+
+Syntax:
+1. Import Form Array
+
+import { FormArray } from '@angular/forms';
+
+2. Create a FromBuilder object
+
+      private fb : FormBuilder
+
+      this.fb.control()
+
+3. Add control into Form Array
+
+     this.formArray.push(this.fb.control(' '));
+
+
+
+
+
+
+
+
+
