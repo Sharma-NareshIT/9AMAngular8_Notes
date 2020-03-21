@@ -163,7 +163,76 @@ import { FormArray } from '@angular/forms';
 
 
 
+Ex:
+1. formbuilderdemo.component.ts
 
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-formbuilderdemo',
+  templateUrl: './formbuilderdemo.component.html',
+  styleUrls: ['./formbuilderdemo.component.css']
+})
+export class FormbuilderdemoComponent {
+
+  constructor(private fb: FormBuilder) { }
+  public frmRegister = this.fb.group({
+      Name: ['', Validators.required],
+      Price: [''],
+      frmDetails: this.fb.group({
+        City: [''],
+        IsInStock: ['']
+      })
+  });
+}
+
+
+2. formbuilder.component.html
+
+<div class="container">
+  <form [formGroup]="frmRegister">
+    <dl>
+        <dt>Name</dt>
+        <dd>
+            <input type="text" formControlName="Name" required >
+            <span *ngIf="frmRegister.value.Name.invalid" >Name Required</span>
+        </dd>
+        <dt>Price</dt>
+        <dd>
+            <input type="text" formControlName="Price" >
+        </dd>
+    </dl>
+    <div formGroupName="frmDetails">
+        <dl>
+            <dt>City</dt>
+            <dd>
+                <select formControlName="City">
+                    <option>Delhi</option>
+                    <option>Hyderabad</option>
+                </select>
+            </dd>
+            <dt>Is In Stock</dt>
+            <dd>
+                <input type="checkbox" formControlName="IsInStock">
+            </dd>
+        </dl>
+    </div>
+  </form>
+  <div>
+      <h2>Product Details</h2>
+      <dl>
+          <dt>Name</dt>
+          <dd>{{frmRegister.value.Name}}</dd>
+          <dt>Price</dt>
+          <dd>{{frmRegister.value.Price}}</dd>
+          <dt>City</dt>
+          <dd>{{frmRegister.value.frmDetails.City}}</dd>
+          <dt>Is In Stock</dt>
+          <dd>{{frmRegister.value.frmDetails.IsInStock}}</dd>
+      </dl>
+  </div>
+</div>
 
 
 
