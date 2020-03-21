@@ -1,0 +1,93 @@
+Ex: FormBuilder and Form Array
+
+1. Add a new Component 
+      > ng g c builder
+
+2. builder.component.ts
+
+import { Component, OnInit } from '@angular/core';
+import {  FormBuilder, FormArray } from '@angular/forms';
+
+@Component({
+  selector: 'app-builder',
+  templateUrl: './builder.component.html',
+  styleUrls: ['./builder.component.css']
+})
+export class BuilderComponent {
+
+  constructor(private fb: FormBuilder) { }
+
+  public frmRegister = this.fb.group({
+    Name: [''],
+    newControls: this.fb.array([
+      this.fb.control('')
+    ])
+  });
+  get newControls(){
+     return this.frmRegister.get('newControls') as FormArray;
+  }
+  public AddControl() {
+    this.newControls.push(this.fb.control(''));
+  }
+  public RemoveControl(i){
+    this.newControls.removeAt(i);
+  }
+}
+
+3. builder.component.html
+
+<div class="container">
+    <h2>Register Product</h2>
+  <form [formGroup]="frmRegister">
+     <div class="form-group">
+         <label>Name</label>
+         <div>
+             <input type="text" formControlName="Name" >
+         </div>
+     </div>
+     <div class="form-group">
+        <label>Photo <button (click)="AddControl()" class="btn btn-link">Add More</button> </label>
+        <div *ngFor="let c of newControls.controls; let i=index">
+           
+            <div>
+                <input type="file" formControlName="i">
+                <button (click)="RemoveControl(i)" class="btn btn-link">Remove</button>
+            </div>
+        </div>
+     </div>
+  </form>
+</div>
+
+a) group()  - Creates From
+b) control() - Create a control
+c) array()    - Add/Remove controls dynamically
+
+- Template Driven Form
+- Reactive Form / Model Driven Form
+
+Summary 
+
+Feature	       Reactive	Template Driven
+============================================
+Form Model     More Explicit,    Less Explicit,	
+	        Created in	Created in HTML
+	        component	Created by using
+	        class.	directives in UI.
+-----------------------------------------------------------------------------
+
+Data Model      Structured         UnStructured
+
+-----------------------------------------------------------------------------
+
+Predictability   Synchronous     Asynchronous
+
+-----------------------------------------------------------------------------
+
+FormValidation   Explicit,           Implicit
+	           Functions	 Directives [ngValid]
+
+-----------------------------------------------------------------------------
+
+Mutability	           Immutable	 Mutable
+
+-----------------------------------------------------------------------------
