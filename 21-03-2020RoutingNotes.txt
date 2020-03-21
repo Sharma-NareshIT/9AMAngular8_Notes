@@ -1,0 +1,18 @@
+	           Angular Routing
+- Web Development we have to implement lot of techniques like
+	a) Model Binding
+	b) Caching
+	c) Routing
+	d) Redirection
+- Routing is a technique used in web applications.
+- Routing is used to configure and create more SEO friendly and User Friendly URL or URI
+- SEO friendly URL allows the search engines or WebCrawlers to identify exactly what you are watching.
+- User Friendly URL allows to query any content directly from URL, also to continue from where you have left.
+- In SPA and Progressive Web Applications You can stay on one page and get access to everything on to the page by using routing.
+- Without reloading the complete page the new details
+  are added into the current page.
+- Page more modular.
+- Only the part that is required will be loaded
+- It implement Ajax
+- Angular is using routing Client Side.
+- Routing in angular is a technqiue which is not completely stable.
