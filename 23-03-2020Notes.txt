@@ -1,0 +1,126 @@
+      	            Angular Routing
+
+- Web Development we have to implement lot of techniques like
+
+	a) Model Binding
+
+	b) Caching
+
+	c) Routing
+
+	d) Redirection
+
+- Routing is a technique used in web applications.
+
+- Routing is used to configure and create more SEO friendly and User Friendly URL or URI
+
+- SEO friendly URL allows the search engines or WebCrawlers to identify exactly what you are watching.
+
+- User Friendly URL allows to query any content directly from URL, also to continue from where you have left.
+
+- In SPA and Progressive Web Applications You can stay on one page and get access to everything on to the page by using routing.
+
+- Without reloading the complete page the new details
+
+  are added into the current page.
+
+- Page more modular.
+
+- Only the part that is required will be loaded
+
+- It implement Ajax
+
+- Angular is using routing Client Side.
+
+- Routing in angular is a technqiue which is not completely stable.
+
+- Modules required for handling routes in Angular
+
+	a) Routes
+	b) RouterModule
+
+- The library for routing is defined in "@angular/router"
+
+- "Routes" is used to configure the routes for angular application.
+
+- "RouterModule" is used handle the routes like loding routes into route table and verifying the route references.
+
+- Routes are configured in a special file [Reserved file]
+	      "app-routing.module.ts"
+		[app folder]
+
+- Routes are created by using "Routes" module in "app-routing.module.ts"
+ 
+            const   routes : Routes = [
+                  {
+                     path:
+	   component:
+	   redirectTo:
+	   outlet:
+	   pathMatch:
+	   children:
+                  },
+                  {
+                  }
+             ]
+
+FAQ: Why routes are configured with "const"?
+A.  Every route must be initialized because it is defined in configuration phase. 
+      In configuration there can't be declaration and rendering, there must be only initialization.
+      Routes once configured can't be shadowed i.e can't be redefined.
+
+  Route Property		Description
+ ==========================================
+  path	           It specifies the route name which is 
+	           used as a reference for accessing
+	           the content.
+
+	           It specifies the name that defines
+	           how client can request any 	           component from URL.
+
+  component        It specifies which component to
+	            locate and process on the request
+	            of specified path.
+
+  redirectTo          It specfies the default path for
+	            navigation if requested path not 
+	            found. It handle dynamic redirection
+	            to any reference. [Path]
+
+   pathMatch         It is a string that specifies the
+	            matching strategry for path. so that
+	            it can access the content based on
+	            given stratergy.
+
+   data	             It refers to the additional 	             information for route, such as title
+	             and request type, outlet name etc..
+	             [Meta data]
+
+   outlet	              It specifies the location where
+	              the output should be rendered.
+	              It uses the outlet name.
+
+   children	              It is a collection of child routes.
+
+
+Router Module
+============
+  It provides a set of properties and methods that are used to export and load the routes into route table. It implements "ngModule" base.
+
+Syntax:
+    @ngModule({
+         imports: [RouterModule.forRoot(routes)],
+         exports: [RouterModule]
+     })
+
+
+Route Directives:
+1. routerLink     : It is used to create a hyperlink that
+	           navigates to specified route by using
+	           the route path.
+
+   Syntax:
+     <a routerLink="path"> Text </a>
+
+2. <router-outlet> :  It specifies the location where
+	                the link target should be render.
