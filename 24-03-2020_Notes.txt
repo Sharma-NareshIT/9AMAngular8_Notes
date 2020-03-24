@@ -1,0 +1,110 @@
+Wild Card Routes:
+     - If user is not request anything by default it redirects to the specifies component by using the property "redirectTo".
+
+      { path : ' ', redirectTo: 'register', pathMatch='full'}
+
+    - If user is request someting from URL but it is not available in the resources. Then you can verify by using "**" in the path. 
+
+     { path: '**', component: 'NotFoundComponent' }
+
+Ex:
+
+1. Add following components into project
+    >ng g  c  tutorialhome
+    >ng g  c  login
+    >ng g  c  register
+    >ng g  c  jquerytutorial
+    >ng g  c  csstutorial
+    >ng g  c  notfound
+
+2. Goto "app" folder and add a new file
+               "app-routing.module.ts"
+                              or
+                >ng g module app-routing
+
+import { NgModule } from '@angular/core';
+
+import { Routes, RouterModule } from '@angular/router';
+
+import { CsstutorialComponent } from './csstutorial/csstutorial.component';
+
+import { JquerytutorialComponent } from './jquerytutorial/jquerytutorial.component';
+
+import { LoginComponent } from './login/login.component';
+
+import { RegisterComponent } from './register/register.component';
+
+import { NotfoundComponent } from './notfound/notfound.component';
+
+const routes: Routes = [
+    {path: 'css', component: CsstutorialComponent},
+    {path: 'jquery', component: JquerytutorialComponent},
+    {path: 'login', component: LoginComponent},
+    {path: 'register', component: RegisterComponent},
+    {path: '', redirectTo: 'register', pathMatch: 'full'},
+    {path: '**', component: NotfoundComponent }
+];
+
+@NgModule({
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
+})
+export class AppRoutingModule {
+
+}
+
+3. Goto "tutorialhome.component.html"
+
+<div class="container">
+ <div style="margin-top: 20px;">
+   <div class="btn-toolbar bg-primary">
+      <div class="btn-group text-white">
+        <a routerLink="css" class="btn btn-primary">CSS Tutorial</a>
+        <a routerLink="jquery" class="btn btn-primary">JQuery Tutorial</a>
+        <a routerLink="login" class="btn btn-primary">Login</a>
+        <a routerLink="register" class="btn btn-primary">Register</a>
+      </div>
+   </div>
+ </div>
+ <div style="height: 400px;">
+      <router-outlet></router-outlet>
+ </div>
+ <div class="bg-primary text-center text-white">
+     &copy; copyright 2020 Naresh IT
+ </div>
+</div>
+
+4. Add any content into other components.html i.e
+    jquerytutorial, csstutorial, login, register
+
+5. Goto "notfound.component.html"
+        <h2> Page you requested - not found </h2>
+
+6. Goto "app.module.ts"
+ import { RouterModule } from '@angular/router';
+ import { AppRoutingModule } from './app-routing.module';
+
+     imports: [
+                RouterModule,
+                AppRoutingModule
+     ]
+     bootstrap: [TutorialhomeComponent]
+
+
+
+Route Parameters:
+- How data is transported from one component to another
+           a) Input()
+           b) Output()
+- How data is transported from one page to another client side?
+           - QueryString
+           - Cookies
+- Query String  appends the data in URL and stores in browser address bar.  So that any another page can access the query string.
+
+          http://localhost:4200?name=tv&price=45000
+
+- Cookies are simple text documents ".txt" where the client details are stored and kept in browser memory or in the client mechine hard drive.
+
+- When you are implementing routing the data can be transported by using "Route Parameters"
+
+    http://localhost:4200/product/tv/45000
