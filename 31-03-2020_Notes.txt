@@ -1,0 +1,66 @@
+	        End to End Integration
+	          [using MEAN Stack]
+M	- MongoDb [Database]
+E	- Express	  [Middleware]
+A	- Angular	  [Client Side]
+N	- Node JS	  [Server Side]
+
+
+	              MongoDb
+	             [Database]
+- Mongo is a cloud Service
+- MongoDB is an open source, cross platform document oriented database.
+- MongoDB is an NonSql database.
+- MongoDB is JavaScript based database.
+-MongoDB is non-RDBMS
+-It is schema less
+-Every record [Row] is individual
+-Ad-Hoc Queries
+-Data Replications
+-High Availability
+
+Setup Environment for MongoDb
+-----------------------------------------------
+1. Download and Install MongoDb on your PC
+
+      Visit:
+      https://www.mongodb.com/download-center
+     
+2. Goto "Server" category in site
+3. Download
+	Version  : 4.2 
+	OS          : Win 64
+	Package : MSI
+4. Install 
+
+Start MongoDB Server:
+---------------------------------
+1. Open Windows --> Run
+2. Type "services.msc"
+3. Right Click on "MongoDB Server"
+4. Select "Start"
+
+Start MongoDB Client:
+--------------------------------
+1. Open Command Prompt
+2. Change to the following directory
+
+   C:\Program Files\MongoDb\Server\4.0\bin>
+
+3. Type
+	> mongo.exe
+4. This will connect to MongoDb Server 
+
+     Url :  "mongodb://127.0.0.1:27017"
+
+5. It will open the Terminal from where you can handle Database Commands
+
+      RDBMS		MongoDb
+      ===============================
+      Database		Database
+      Table			Collection
+      Tuple/Row		Document
+       Column		Field
+       Table Join		Embeded Document
+        Primary Key		Primary Key
+			(Default Primary Key)
