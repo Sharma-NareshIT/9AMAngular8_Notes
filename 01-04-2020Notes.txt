@@ -1,0 +1,104 @@
+	        MongoDb Commands
+1. To View the list of databases present in MongoDB server.
+	>show dbs
+
+ note: MongoDB commands are case sensitive.
+
+2. To View and access the curent active database.
+
+	>db
+
+3. To Remove [Drop] any database
+
+	>db.dropDatabase()
+  
+   note: first use the database and then drop database
+	>use  databaseName
+	>db.dropDatabase()
+
+Syntax:
+> use amazondb
+switched to db amazondb
+> db
+amazondb
+> db.dropDatabase()
+{ "dropped" : "amazondb", "ok" : 1 }
+     
+4. Creating a new Database in MongoDB
+
+	>use newDatabaseName
+
+note: "use" command creates a database if the specified name is not in database list. If Name is in the list then it will start using the database.
+          The newly created database will not be displayed in Database list until or unless it is having tables [collections].
+          Empty database will not be display in database list. You can verify the current database by using "db" command.
+
+5. Adding a collection [Table] into Database
+
+Syntax:
+   > db.createCollection("collectionName", {options})
+   > db.createCollection("collectionName")
+
+Table Option      Type 	Description
+============================================
+ autoIndexId       boolean      It defines an ID a primary
+		             key for table. It will be
+		             automatically generated
+		             for every record.[row].
+  		             [ if set to true ]
+
+ capped	          boolean       If it is set to true, then
+		             after reaching the max
+		             records, the new record
+		             will replace the old 		             records. [from top]. It
+		             overwrites the old entires
+		              with the new entries.
+
+ size	          number         It specifies the space
+		               allocated for table in
+		               memory. [size is defined
+			in bytes].
+
+ max	          number        The maximum number of
+		              records [rows] that can
+		              stored in a collection.
+		              [table]
+
+Syntax:
+> db.createCollection("collectionName", {autoIndexId:bool, capped:bool, max:number, size:number})
+
+Ex:
+db.createCollection("tblproducts",{autoIndexId:true, capped:true, max:10, size:2097152})
+
+	1024 x 1024 =   1mb
+
+6. To View the list of collections [tables] in Database
+
+	>show collections
+
+7. To delete collection [remove table] from database
+
+	>db.collectionName.drop()
+	>db.tblcategories.drop()
+
+8. Inserting documents [rows] into collection [table].
+
+   >db.collectionName.insert({fieldName:value, fieldName:value})
+  > db.collectionName.insert([{ }, { }, ..])
+
+Ex: Insert Single Document
+>db.tblproducts.insert({ProductId:1, Name:"Samsung TV", Price:34000.55, IsInStock:true, Photo:"assets/tv.jpg"})
+
+Ex: Insert Multiple Documents
+
+>db.tblproducts.insert([{ProductId:2, Name:"Mobile", Price:11000.55, IsInStock:true, Photo:"assets/mobile.jpg"},{ProductId:3, Name:"Nike Causals", Price:5000.75, IsInStock:true, Photo:"assets/shoe.jpg"}, {ProductId:4, Name:"Lee Cooper Boot", Price:4000.55, IsInStock:true, Photo:"assets/shoe1.jpg"}])
+
+9. View the documents [rows] present in a collection [table]
+
+	> db.collectionName.find()
+	> db.collectionName.find({query})
+	> db.collectionName.find().pretty()
+
+Ex:
+>db.tblproducts.find().pretty()
+
+	
