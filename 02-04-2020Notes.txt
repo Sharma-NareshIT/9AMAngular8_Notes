@@ -1,0 +1,51 @@
+10. Query Documents from collection
+
+      >db.collectionName.find({query}).pretty()
+
+ Query Condition	         Query Syntax
+ ==========================================
+  Equal To		        {Property:"Value"}
+  Greater Than	        {Property: {$gt:value}}
+  Greater than or Equal     {Property: {$gte:value}}
+  Less than	        {Property:{$lt:value}}
+  Less than or Equal	        {Property:${lte:value}}
+  Not Equal	        {Property:${ne:value}}
+
+
+
+
+
+Ex:
+  db.tblproducts.find({Name:"Mobile"}).pretty() 
+  db.tblproducts.find({Price:{$gt:10000}}).pretty()
+  db.tblproducts.find({Price:{$lt:5000}}).pretty()
+
+11. Update Documents
+
+Syntax:
+>db.collectionName.update({selectionCriteria}, {$set:{UdateData}})
+
+>db.collectionName.update({'Property':'Value'}, {$set:{Property:'NewValue'}})
+
+Ex:
+db.tblproducts.update({'Name':'Mobile'},{$set:{'Name':'LG Mobile'}})
+
+db.tblcategories.update({'CategoryId':1},{$set:{'Name':'Electronics'}})
+
+12. Delete Documents from collection
+
+  >db.collectionName.remove(deletionCriteria, confirmBoolean)
+
+Ex:
+db.tblcategories.remove({CategoryId:1},true)
+db.tblcategories.remove({CategoryId:1}, 1)
+
+
+	     Server Side Scripting
+- Server Side Scripting is a technique used in web development to generate response customized for every client request.
+- Scripts are employed on server in order to generate a response for client request.
+- Several Languages are used in Server Side Scripting, like :
+	C, Java, C#, JavaScript, Python
+
+	             "Node JS"
+
