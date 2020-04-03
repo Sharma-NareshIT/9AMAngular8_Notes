@@ -1,0 +1,90 @@
+		Node JS
+- Node Js is a server side platform.
+- Built on Google Chrome's JavaScript Engine [V8].
+- Open Source, Cross-platform runtime environement  for developing server-side and networking applications.
+- It is javascript based server side technology.
+- Node JS application can run on any OS
+	[Windows, Linux, Mac]
+
+Features of Node JS
+=================
+1. Asynchronous 
+2. Modular Approach
+3. Leight weight
+4. Faster
+5. No Buffering
+
+Install Node JS
+=============
+1. Visit
+	https://nodejs.org/en/download/
+
+2. Download and Install MSI for windows
+
+3. Test in command prompt
+	>node -v
+
+Node JS Program Structure
+=======================
+1. Node JS programs are JavaScript programs that run server side. They must have the extention ".js"
+
+2. Node Compiler is used to compile and  run NodeJS program.
+	>node program.js
+
+3. You have to use JavaScript in node js only as language not for DOM manipulation.
+	- Variables
+	- DataTypes
+	- Operators
+	- Statements
+	- Functions
+	- Modules
+          REPL
+	- R	Read
+	- E	Execute
+	- P	Print
+	- L	Loop
+
+4. A Typical Node JS program comprises of  following stages
+
+      a) Download and Install required library from NPM
+      b) Import the library into program by using the
+          function "require()"
+      c) You can implement the functionality for members in the library.
+
+
+Ex: Write a server side program in Node Js to read content from a file and print on console.
+
+1. In order to read / write data into files you need a library "fs" [file stream] in Node JS.
+               > npm install fs
+    The library will be installed into project and its files are stored in "node_modules" folder.
+
+2. Create a new JavaScript file server side
+	            "demo.js"
+//Import Library
+var fs = require("fs");
+
+//Reading with Synchronous Approach
+
+var data = fs.readFileSync("../help.txt");
+console.log(data.toString());
+console.log("Read Completed...");
+
+3. Compile and Run
+	> node demo.js
+
+Ex: Asynchronous - Un Blocking
+
+	         unblocking.js
+	         ===========
+var fs = require("fs");
+
+//Read by using Asynchronous Approach
+
+fs.readFile("../help.txt", function(err, data){
+    if(!err) {
+        console.log(data.toString());
+    } else {
+        console.log(err);
+    }
+})
+console.log("Read Completed...");
