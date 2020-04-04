@@ -1,0 +1,86 @@
+Node Js Server Side Program 
+Blocking and Un-Blocking Technique
+
+Server Side Node JS Program to Communicate with Database: [MongoDb]
+===========================================
+1. Install Package for MongoDb in Node JS Project
+ 
+       > npm install mongodb
+
+Note: To connect with any database from any technology you need a connection string. It varies according to database and technology.
+	www.connectionstrings.com
+
+2. To connect with MongoDb database server the connection string is
+          "mongodb://127.0.0.1:27017"
+          "mongodb://localhost:27017"
+
+Ex: Connecting with MongoServer
+
+	 "MongoConnection.js"
+var mongoClient = require("mongodb").MongoClient;
+var serverUrl = "mongodb://127.0.0.1:27017";
+
+mongoClient.connect(serverUrl, function(err,clientObj){
+    if(!err) {
+        console.log("Connected to Mongodb..");
+    } else {
+        console.log(err);
+    }
+})
+
+
+Ex: Reading Data from a DB Table in Mongodb
+
+	          "readData.js"
+var mongoClient = require("mongodb").MongoClient;
+var serverUrl = "mongodb://127.0.0.1:27017";
+
+mongoClient.connect(serverUrl, function(err, clientObj){
+    if(!err) {
+        var database = clientObj.db("amazondb");
+        database.collection("tblproducts", function(err, documents){
+            if(!err) {
+                documents.find({}).toArray(function(err, result){
+                    if(!err) {
+                        console.log(result);
+                    } else {
+                        console.log(err);
+                    }
+                })
+            } else {
+                console.log(err);
+            }
+        })
+    } else {
+        console.log(err);
+    }
+})
+
+Ex: Insert Records into MongoDB Table from Node Js
+		"insert.js"
+
+var mongoClient = require("mongodb").MongoClient;
+var serverUrl = "mongodb://127.0.0.1:27017";
+
+mongoClient.connect(serverUrl, function(err, clientObj){
+    if(!err){
+        var database = clientObj.db("amazondb");
+        var data = {
+            ProductId:5,
+            Name:"Watch",
+            Price:2300.44,
+            IsInStock:false,
+            Photo: "assets/watch.jpg"
+        };
+        database.collection("tblproducts").insertOne(data, function(err,result){
+            if(!err){
+                console.log("Record Inserted..");
+            } else {
+                console.log(err);
+            }
+        })
+    } else {
+        console.log(err);
+    }
+})
+
