@@ -1,0 +1,87 @@
+	               Middleware 
+	                [Express]
+- It is a software framework that enables communication between tiers in a multi tier application.
+- Communication between webserver, application server and Database server.
+- Express is a middleware that allows to create RESTful service requests with any server side technology to handle request from client and send a response.
+
+Distributed Computing:
+===================
+   It is an software architecture that allows communication between 2 applications running in 2 differents mechines or 2 applications running in same mechine but different process.
+Ex:
+CORBA
+-Common Object Request Broken Architecture
+RMI
+-Remote Method Invocation
+DCOM
+-Distribute Component Object Model
+Java Beans
+Web Services ** known to all technolgoies
+Remoting 
+
+WebService Specifications:
+1. SOAP
+     - Service Oriented Architecture Protocol
+     - The request from client will be in XML
+     - The response from server will be in XML
+     - It uses WSDL, UDDI
+
+2. REST
+     - Representation State Transfer
+     - Request will be in simple Query
+     - Response will be in XML and optionally JSON
+
+3. JSON
+     - JavaScript Object Notation
+     - Request and Response will be in JSON
+     - JSON is native to every brower
+
+express()	- Requests are handled 
+
+Request		Description
+------------------------------------------------------------------
+GET	 To fetch resource
+POST	  To submit resource
+PUT	  To modify the resource
+DELETE	  To remove the resource
+
+Server Objects:
+1. Request Object 
+    It is used by server to request details from client. like query string, cookies, files, forms etc.
+
+2. Response Object
+    It is used by server to send a response to client. like file response, json response, xml response, cookie etc..
+
+1. Install Express:
+ > npm install express
+
+2. Create a program "server.js"
+
+var express = require("express");
+
+var app = express();   // Express class
+
+app.get("/", function(request, response){
+    response.send("<h2>API - Home </h2>");
+})
+
+app.get("/products", function(request, response){
+    response.send("<h2>Products List</h2>");
+})
+
+app.get("/c*t", function(request, response){
+    response.send("<h2>You requested wild card path eg: contact</h2>");
+})
+app.listen(8080);
+console.log("Server Started Listening : http://127.0.0.1:8080");
+
+
+
+
+
+
+
+
+
+
+
+
