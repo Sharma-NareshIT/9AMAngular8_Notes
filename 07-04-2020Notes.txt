@@ -1,0 +1,94 @@
+Creating API Requests:
+1. Install Express
+	> npm install express
+
+2. Create a new JS file with API requests
+	
+	GET	- Fetching Data
+	POST	- Submitting
+	PUT	- For Modifying
+	DELETE	- For Removing
+
+	         "api.js"
+
+var express = require("express");
+var app = express();
+
+app.get("/", function(req, res){
+    res.send("API Index Page");
+});
+
+app.get("/api/getProducts", function(req, res){
+    res.send("You request Products List");
+});
+
+app.post("/api/addProducts", function(req, res){
+    res.send("It is on POST - Adding Products");
+});
+
+app.put("/api/updateProducts", function(req, res){
+    res.send("It is on PUT - Modifying Products");
+});
+
+app.delete("/api/deleteProducts", function(req, res){
+    res.send("It is on Delete - Removing Product");
+});
+
+app.listen(4000);
+console.log("Server Listening: http://127.0.0.1:4000");
+
+Note: In a browser you can test only "GET" request.
+          In order to test all requests you need a web debugger like "fiddler, postman etc..".
+	- Open Chrome
+	- type url :  Chrome://apps
+	- goto webstore
+	- search for postman
+	- install plugin for your browser.
+
+Test API:
+1. Open Postman
+     Chrome://apps → postman
+
+2. In the Requests select "method=POST"
+3. Type the URL
+	http://127.0.0.1:4000/api/addproducts
+4. click on Send button.
+5. similary try other requests by changing the method.
+
+
+Read Data from MongoDb using API and send to Client:
+===========================================
+	         "WebApi.js"
+
+var mongoClient = require("mongodb").MongoClient;
+var express = require("express");
+var app = express();
+
+var url = "mongodb://127.0.0.1:27017";
+
+app.get("/api/getProducts", function(req, res){
+    mongoClient.connect(url, function(err, client){
+        if(!err) {
+            var database = client.db("amazondb");
+            database.collection("tblproducts").find({}).toArray(function(err, documents){
+                if(!err) {
+                    res.send(documents);
+                } else {
+                    console.log(err);
+                }
+            })
+        } else {
+            console.log(err);
+        }
+    })
+})
+app.listen(4000);
+console.log("Server Listening on  - http://127.0.0.1:4000");
+
+
+
+
+
+
+
+	
