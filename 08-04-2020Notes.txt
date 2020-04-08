@@ -1,0 +1,60 @@
+// Import Library
+
+var express = require("express");
+var mongoClient = require("mongodb").MongoClient;
+var bodyParser = require("body-parser");
+
+// Configure APP
+var app = express();
+
+// Configure Database URL
+var url = "mongodb://127.0.0.1:27017";
+
+// Configure Body Parser
+app.use(bodyParser.urlencoded({
+    extended:true
+}));
+
+// Configure CORS
+app.use(function(req, res, next){
+   res.header("Access-Control-Allow-Origin","*"),
+   res.header("Access-Control-Header","Origin, X-Requested-with, Content-Type, Accept");
+   res.header("Access-Control-Allow-Methods","GET","POST","PUT");
+   next();
+});
+
+// Configure API Requests
+app.get("/api/getProducts", function(req, res){
+    mongoClient.connect(url, function(err, client){
+        var database = client.db("amazondb");
+        database.collection("tblproducts").find({}).toArray(function(err, documents){
+            if(!err) {
+                res.send(documents);
+            } else {
+                console.log(err);
+            }
+        })
+    })
+});
+app.post("/api/addProduct", function(req, res){
+    mongoClient.connect(url, function(err, client){
+        var database = client.db("amazondb");
+        var data = {
+            ProductId:req.body.ProductId,
+            Name:req.body.Name,
+            Price:req.body.Price,
+            IsInStock:req.body.IsInStock,
+            Photo: req.body.Photo
+        };
+        database.collection("tblproducts").insert(data, function(err, result){
+            if(!err) {
+                console.log("Record Inserted");
+            } else {
+                console.log(err);
+            }
+        })
+    })
+});
+app.listen(4000);
+console.log("Server Listening -http://127.0.0.1:4000");
+
