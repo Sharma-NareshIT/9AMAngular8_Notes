@@ -1,0 +1,81 @@
+MongoDB	- Database	M
+Express	- Middleware	E
+Angular	- Client Side	A
+Node JS 	- Server Side	N
+
+	            RxJS
+- Reactive Extention for JavaScript [RxJs].
+- It is a library that provides asynchronous technique to handle various interactions in an application.
+- Asynchronous means un-locking [un-blocking]
+- It provides various functions that are responsible for handling asynchrous responses.
+- It is a recative extention for javascript which handles mapping, filtering, iterating like operations on data.
+- To make the data interactions asynchronous you can use RxJs library.
+- The major components of RxJs library used for anync tasks are
+
+Component	Description
+===========================================
+Observable	It represents a type of an
+		invokable collection for 
+		identifying the type of data
+		returned on request.
+		It is a function that creates
+		an observer and identifies
+		the expected value. It gets the
+		data from Http Request.
+
+Observer		It is  collection of callback that
+		know how to listen to the value
+		delivered by observable.
+
+Subscription	It represent the execution of
+		an observable and also 
+		responsible for canceling the
+		execution.
+
+Operators		It provides a set of functions
+		that enable the operation like
+		map, filtering, contact etc..
+
+Subject		It is similar to event emmiter
+		that emmits the values based on
+		specific state in application.
+
+Schedules	They are use to perform any
+		task at scheduled time intervals.
+		
+
+
+	        Angular HttpClient
+	       ================
+- Angular provides an HttpClient module that internally uses XmlHttpRequest object to handle http request from client.
+
+Q. How client side technolgoies consume the data from an API and get the data from JSON format?
+
+	JavaScript  uses	XmlHttpRequest obj
+	JQuery	   uses	$.getJson()
+	Angular Js  uses	$http()
+	Angular	   uses	HttpClient module
+
+ Internally all client side technologies are using "XmlHttpRequest".
+
+- HttpClient is provided by Angular and uses to manage various requests from client.
+
+- It includes GET, POST, PUT, DELETE etc..
+- HttpClient module is available in 
+	"@angular/common/http"
+
+
+
+http://127.0.0.1:4000/api/getProducts  - API to get all
+			             form database.
+subscribe(function(url, data){
+       return data;
+  })
+ subscribe(data => this.products = data)
+
+
+
+
+
+
+	          
