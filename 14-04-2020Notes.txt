@@ -1,0 +1,225 @@
+	              REST API
+- Server Side 	: Node JS
+- Database	: MongoDb
+- Middleware	: Express
+- Client Side	: Angular
+
+Create a new Database in MongoDb
+=============================
+> use amazondb
+> db.createCollection("tblproducts");
+> db.tblproducts.insert({ProductId:1, Name:"TV", Price:34000.55, IsInStock:true, Photo:"assets/tv.jpg"})
+
+
+
+1. Goto Server Side folder and Install Packages
+	> npm install mongodb
+	> npm install express
+
+2. Add a new Server Side Program
+		"api.js"
+// Import Library
+
+var express = require("express");
+var mongoClient = require("mongodb").MongoClient;
+var bodyParser = require("body-parser");
+
+// Configure Database URL
+var url = "mongodb://127.0.0.1:27017";
+
+// Configure APP
+var app = express();
+
+
+// Configure Body Parser
+app.use(bodyParser.urlencoded({
+    extended:true
+}));
+app.use(bodyParser.json());
+
+// Configure CORS
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");  
+    res.header("Access-Control-Allow-Methods", "GET", "POST", "PUT");
+    next();
+  });
+
+// Configure API Requests
+app.get("/api/getProducts", function(req, res){
+    mongoClient.connect(url, function(err, client){
+        var database = client.db("amazondb");
+        database.collection("tblproducts").find({}).toArray(function(err, documents){
+            if(!err) {
+                res.send(documents);
+            } else {
+                console.log(err);
+            }
+        })
+    })
+});
+app.post("/api/addProduct", function(req, res){
+    mongoClient.connect(url, function(err, client){
+        var database = client.db("amazondb");
+        var data = {
+            ProductId: req.body.ProductId,
+            Name: req.body.Name,
+            Price: req.body.Price,
+            IsInStock: req.body.IsInStock,
+            Photo: req.body.Photo
+        }
+        database.collection("tblproducts").insert(data, function(err, result){
+            if(!err) {
+                console.log("Record Inserted");
+            } else {
+                console.log(err);
+            }
+        })
+    })
+});
+app.listen(4000);
+console.log("Server Listening -http://127.0.0.1:4000");
+
+3. Start the API
+	> node api.js
+	   Server Listening -http://127.0.0.1:4000
+
+4. Add a Contract in your project app folder by name
+	         "IProduct.ts"
+      interface IProduct 
+      {
+  	  ProductId;
+   	 Name;
+   	 Price;
+   	 IsInStock;
+   	 Photo;
+        }
+         
+	
+
+5. Goto Angular Project and add a new service
+           >ng generate service productsapidata
+
+	  "productsapidata.service.ts"
+
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ProductsapidataService {
+  public apiUrl = 'http://127.0.0.1:4000/api/getProducts';
+  public postUrl = 'http://127.0.0.1:4000/api/addProduct';
+
+  constructor(private http: HttpClient) { }
+  
+  public GetProducts(): Observable<IProduct[]> {
+    return this.http.get<IProduct[]>(this.apiUrl);
+  }
+  public AddProduct(data) {
+     return this.http.post<any>(this.postUrl,data).pipe(catchError(this.CatchError))
+  }
+  public CatchError(error: HttpErrorResponse) {
+    return throwError(error.statusText);
+  }
+}
+
+6. Register Service and other modules in app.module.ts
+	imports: [	
+	 HttpClientModule,
+   	 FormsModule
+  	]
+	providers: [ProductsapidataService],
+
+7. Add a new Component
+	   > ng g component  consumedata
+
+8. Goto "consumedata.component.ts"
+
+import { Component, OnInit } from '@angular/core';
+import { ProductsapidataService  } from '../productsapidata.service';
+
+@Component({
+  selector: 'app-consumedata',
+  templateUrl: './consumedata.component.html',
+  styleUrls: ['./consumedata.component.css']
+})
+export class ConsumedataComponent implements OnInit {
+
+  public products = [];
+  constructor(private data: ProductsapidataService) { }
+
+  ngOnInit(): void {
+    this.data.GetProducts().subscribe(data=>this.products=data);
+  }
+  public RegisterProduct(data) {
+     this.data.AddProduct(data).subscribe(error=> console.log('Something went wrong-unable to insert'));
+     alert('Record Inserted');
+     location.reload();
+  }
+}
+
+9. consumedata.component.html
+
+<div class="container">
+  <h2>Products Data</h2>
+  <div class="form-group" style="width: 300px; border:1px solid darkcyan; padding: 10px;">
+    <form #frmRegister="ngForm" method="POST"  (submit)="RegisterProduct(frmRegister.value)" >
+      <dl>
+        <dt>Product Id</dt>
+        <dd><input type="number" name="ProductId" ngModel #ProductId="ngModel" class="form-control" ></dd>
+        <dt>Name</dt>
+        <dd><input type="text" name="Name" ngModel #Name="ngModel" class="form-control" ></dd>
+        <dt>Price</dt>
+        <dd><input type="text" name="Price" ngModel #Price="ngModel" class="form-control" ></dd>
+        <dt>Is In Stock</dt>
+        <dd><input type="checkbox" name="IsInStock" ngModel #IsInStock="ngModel"> Yes </dd>
+        <dt>Photo</dt>
+        <dd><input type="text" name="Photo" ngModel #Photo="ngModel" class="form-control" ></dd>
+      </dl>
+      <button class="btn btn-primary btn-block">Register</button>
+    </form>
+  </div>
+  <div class="form-group">
+    <table class="table table-hover">
+      <thead>
+          <tr>
+              <th>Product Id</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Stock</th>
+              <th>Preview</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let product of products">
+            <td>{{product.ProductId}}</td>
+            <td>{{product.Name}}</td>
+            <td>{{product.Price}}</td>
+            <td>{{(product.IsInStock)==true?"Available":"Out of Stock"}}</td>
+            <td><img src="{{product.Photo}}" width="50" height="50"></td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+	CRUD - Create, Read, Update, Delete
+
+Angular Materials
+Angular Animations
+Angular Testing
+
+
+
+
+
+
