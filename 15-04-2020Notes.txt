@@ -1,0 +1,72 @@
+		Angular Material
+
+- The google Angular team introduced "Material Design" in 2014.
+- It is a collection of pre-defined templates and component which you can integrate into Angular Application.
+- Material Design comprises of HTML, CSS and typescript templates with pre-defined functionality.
+- So many 3rd Party components are provided for Angular like
+	
+Adding Material Library to Angular Project:
+===================================
+1. Open Terminal
+
+     > ng  add @angular/material
+
+2. It will prompt for CSS Theme
+        > Select  indigo-pink  
+
+3. It will prompt for  Angular Material global 
+        > Select Yes
+
+4. It will prompt for Browser Animations
+       > Select Yes
+
+Note: In previous version - 8 it prompts for Hammer.js , which is used for "Touch and Gesture" sensors in mobile environments.
+
+5. Goto "styles.css"  and add Theme CSS for Material
+
+@import "../node_modules/@angular/material/prebuilt-themes/indigo-pink.css";
+
+	                 or
+  Goto "angular.json" and configure in styles
+
+  "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "src/styles.css"
+            ],
+
+Using Material Components:
+=======================
+1. Form Controls
+2. Navigation
+3. Layout
+4. Buttons & Indicators
+5. Popups & Modals
+6. Data Table
+
+
+Ex: Mat CheckBox
+
+1. You have to know about the module required for your component.
+	      "MatCheckBoxModule"
+
+2. You have to import the module from its library and configure in "app.module.ts"
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
+ imports: [
+     BrowserAnimationsModule,
+     MatCheckboxModule
+  ]
+
+3. Goto Your component "matdemo.component.html"
+
+    you have to know the directive for component
+	<mat-checkbox> </mat-checkbox>
+
+
+
+
+
+
