@@ -1,0 +1,111 @@
+	           Angular Animation
+- CSS "transition"
+- CSS "transform"
+- CSS "animate"
+
+Angular can implement CSS 2D and 3D effects by using the animation library defined in 
+
+	"BrowserAnimationModule"
+
+Animation Method		Description
+============================================
+trigger()		- It is used to configure the
+		  animation effects in a 		  component.
+
+state()		- It configures the animation
+		  state.
+		- Animation state is defined 
+		 by using wild card characters.
+		- Two animation states are
+		   regularly used
+		   a) Initial   [void => *]
+		   b) Final    [* => void]
+
+style()		It is used to define CSS effects
+		to any element. It uses all
+		CSS attributes.
+
+transition()	It is used to define that transition
+		for element in initial and final	
+		state.
+
+animate()		It specifies the time interval for
+		transition.
+
+- All animation function are derived from the library "@angular/animations"
+
+- Animations for any component are configured in the component metadata by using "animations[]".
+
+    @Component({
+	selector : ' '
+	templateUrl: ' '
+	styleUrls: [ ]
+	animations: [ ]
+       })
+
+- Animations are configure by using animation functions
+	animations: [
+	     trigger('effectName', [
+	          state('initial, style({ })),
+	          state('final', style({ })),
+	         transition('initial=>final',animate(sec)),
+	         transition('final=>initial',animate(sec))
+	     ]) // end of trigger
+                  ]      // end of animations
+
+- The triggers you create in animations are applied to HTML elements by using "@"
+
+         <div  [@effectName]>
+
+
+Ex:
+1. Add a new component
+	> ng g c animationdemo
+
+2. animationdemo.component.ts
+
+import { Component, OnInit } from '@angular/core';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+
+@Component({
+  selector: 'app-animationdemo',
+  templateUrl: './animationdemo.component.html',
+  styleUrls: ['./animationdemo.component.css'],
+  animations: [
+    trigger('zoomEffect', [
+      state('initial', style({
+          width: '200px',
+          height: '200px',
+          transform: 'rotate(0deg)'
+      })),
+      state('final', style({
+          width: '400px',
+          height: '400px',
+          transform: 'rotate(360deg)'
+      })),
+      transition('initial=>final', animate('1000ms')),
+      transition('final=>initial', animate('1000ms'))
+    ])
+  ]
+})
+export class AnimationdemoComponent implements OnInit {
+
+  constructor() { }
+  public animationState = 'initial';
+  ngOnInit(): void {
+  }
+  public Zoom() {
+     this.animationState = (this.animationState == 'initial')?this.animationState='final':this.animationState='initial';
+  }
+}
+
+3. Goto "animationdemo.component.html"
+
+<div>
+    <img (mouseover)="Zoom()" (mouseout)="Zoom()" [@zoomEffect]="animationState" src="assets/earpods.jpg">
+</div>
+
+		Angular Testing
+		Angular CLI
+
+
