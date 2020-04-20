@@ -1,0 +1,94 @@
+	          Angular Testing
+- Angular supports frameworks like MVC and MVVM
+- One of the key feature of MVC and MVVM architecture is having support for Unit Testing.
+- Unit Testing is the process of testing every function that your write.
+- The component logic, service logic, pipe logic etc.. can be tested.
+- Testing verifies that the exepected value and returned value are both same. It reports the bugs if the return value is not same as expected.
+- Unit Testing can be handled by using various frameworks and tools.
+	a) Protractor
+	b) X-Unit
+	c) J-Unit
+	d) Jasmine / Karma
+- Angular is integrated with Framework like Karma and Jasmine.
+
+Setup Environment for Testing:
+1. Create a new Folder
+	C:\TestingDemo
+2. Open in Command Prompt and Install testing framework
+
+        C:\TestingDemo> npm install jasmine-core
+
+3. Open your project in VS code
+
+4. Add a new HTML file
+	              "index.html"
+
+5. Link the following files in head section
+	node_modules
+	|_jasmine-core
+	   |_lib
+	      |_jasmine-core
+	         |_jasmine.css
+	          _jasmine.js
+	          _jasmine-html.js
+	          _boot.js
+
+Syntax:
+ <head>
+        <link rel="stylesheet" href="node_modules/jasmine-core/lib/jasmine-core/jasmine.css">
+        <script src="node_modules/jasmine-core/lib/jasmine-core/jasmine.js"></script>
+        <script src="node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js"></script>
+        <script src="node_modules/jasmine-core/lib/jasmine-core/boot.js"></script>
+    </head>	
+
+
+- Testing Every component, service or pipe includes 3 stages
+	a) Arrange
+	b) Act
+	c) Assert
+
+- "Arrange" defines the test plan for testing component i.e which component to test.
+
+- "Act" defines what to test i.e which function to test.
+
+- "Assert" verifies the expected value with actual value and specifies test passed or failed.
+
+Syntax:
+          Arrange :    describe()
+          Act         :    it()
+          Assert    :   expect().toBe()
+
+	expect() → What developer written
+	toBe()    → What client wants
+
+Ex:
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="node_modules/jasmine-core/lib/jasmine-core/jasmine.css">
+        <script src="node_modules/jasmine-core/lib/jasmine-core/jasmine.js"></script>
+        <script src="node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js"></script>
+        <script src="node_modules/jasmine-core/lib/jasmine-core/boot.js"></script>
+        <script>
+            describe("DataServiceTesting", function(){
+                it("Addition Test", function(){
+                    expect(10 + 30).toBe(40);
+                })
+            })
+            describe("ProductsComponentTesting", function(){
+                it("Multiply Test", function(){
+                    expect(4 * 10000).toBe(40000);
+                })
+            })
+        </script>
+    </head>
+</html>
+
+
+Goto Angualr Project and run
+	>ng test
+
+
+
+
+
